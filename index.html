@@ -4,31 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Romantic Envelope Page</title>
+
 <style>
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-    background-color: #FFF9C4; /* Soft pale yellow */
+    background-color: #FFF9C4;
     overflow: hidden;
     font-family: Arial, sans-serif;
 }
 
-/* Shining rose top-right */
+/* Shining rose */
 .rose {
     position: absolute;
     top: 20px;
     right: 20px;
     font-size: 7.5rem;
     animation: shine 1.5s infinite alternate;
-    text-shadow: 0 0 5px #fff, 0 0 10px #ff4d4d, 0 0 15px #ff1a1a;
+    text-shadow: 0 0 5px #fff, 0 0 15px #ff4d4d, 0 0 25px #ff1a1a;
     z-index: 10;
 }
 @keyframes shine {
-    0% { transform: scale(1); text-shadow: 0 0 5px #fff,0 0 10px #ff4d4d,0 0 15px #ff1a1a; }
-    50% { transform: scale(1.1); text-shadow: 0 0 10px #fff,0 0 20px #ff4d4d,0 0 25px #ff1a1a; }
-    100% { transform: scale(1); text-shadow: 0 0 5px #fff,0 0 10px #ff4d4d,0 0 15px #ff1a1a; }
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
 }
 
 /* Floating emojis */
@@ -37,9 +37,7 @@ html, body {
     font-size: 2rem;
     opacity: 0.8;
     pointer-events: none;
-    user-select: none;
     z-index: 1;
-    will-change: transform;
 }
 
 /* Envelope */
@@ -56,22 +54,8 @@ html, body {
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     z-index: 5;
 }
-.envelope::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-    border-left: 180px solid transparent;
-    border-right: 180px solid transparent;
-    border-bottom: 110px solid #ffe6f0;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-    z-index: 6;
-}
 
-/* Animated message above envelope */
+/* Message */
 .message {
     position: absolute;
     top: 50%;
@@ -81,84 +65,38 @@ html, body {
     font-weight: bold;
     color: #ff1a75;
     display: flex;
-    gap: 0.2rem;
-    z-index: 10;
+    gap: 3px;
     white-space: nowrap;
-    text-shadow:
-        1px 1px 1px black,
-        -1px -1px 1px white,
-        1px -1px 1px white,
-        -1px 1px 1px white;
-}
-.message span {
-    opacity: 0;
-    animation: appear 0.5s forwards;
-}
-@keyframes appear {
-    0% { opacity: 0; transform: translateY(-20px); }
-    100% { opacity: 1; transform: translateY(0); }
+    text-shadow: 1px 1px 1px black, -1px -1px 1px white;
+    z-index: 10;
 }
 
-/* Animated "Ko Zin" outside envelope with fade-in */
+/* Name */
 .name {
     position: absolute;
     font-size: 2.8rem;
     font-weight: bold;
     color: #ff1a75;
-    display: flex;
-    gap: 0.1rem;
     white-space: nowrap;
+    text-shadow: 2px 2px 2px black, -2px -2px 2px white;
     z-index: 10;
-    text-shadow:
-        2px 2px 2px black,
-        -2px -2px 2px white,
-        2px -2px 2px white,
-        -2px 2px 2px white;
-}
-.name span {
-    opacity: 0;
-    animation: fadeInName 0.5s forwards;
-}
-.name span:nth-child(1) { animation-delay: 0s; }
-.name span:nth-child(2) { animation-delay: 0.2s; }
-.name span:nth-child(3) { animation-delay: 0.4s; }
-.name span:nth-child(4) { animation-delay: 0.6s; }
-.name span:nth-child(5) { animation-delay: 0.8s; }
-.name span:nth-child(6) { animation-delay: 1s; }
-@keyframes fadeInName {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
 }
 
-/* Text inside envelope */
+/* Inside text */
 .envelope-text {
     position: absolute;
     top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
-    display: flex;
-    gap: 0.2rem;
     font-size: 1.8rem;
     font-weight: bold;
     color: #ff1a75;
-    text-shadow:
-        1px 1px 1px black,
-        -1px -1px 1px white,
-        1px -1px 1px white,
-        -1px 1px 1px white;
+    text-shadow: 1px 1px 1px black, -1px -1px 1px white;
     white-space: nowrap;
-    z-index: 7;
-}
-.envelope-text span {
-    opacity: 0;
-    animation: appearInside 0.5s forwards;
-}
-@keyframes appearInside {
-    0% { opacity: 0; transform: translateY(-10px); }
-    100% { opacity: 1; transform: translateY(0); }
+    z-index: 6;
 }
 
-/* Button inside envelope */
+/* Button */
 .envelope-button {
     position: absolute;
     top: 65%;
@@ -168,12 +106,11 @@ html, body {
     font-size: 1.2rem;
     white-space: nowrap;
     background-color: #ff4d4d;
-    color: #fff;
+    color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     display: none;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 .envelope-button:hover {
     background-color: #ff1a1a;
@@ -182,90 +119,58 @@ html, body {
 </head>
 <body>
 
-<!-- Shining rose -->
 <div class="rose">🌹</div>
 
-<!-- Animated message above envelope -->
-<div class="message">
-    <span>H</span><span>a</span><span>p</span><span>p</span><span>y</span>
-    <span> </span>
-    <span>V</span><span>a</span><span>l</span><span>e</span><span>n</span><span>t</span><span>i</span><span>n</span><span>e</span><span>'</span><span>s</span>
-    <span> </span><span>D</span><span>a</span><span>y</span>
-</div>
+<div class="message">Happy Valentine's Day</div>
 
-<!-- Envelope -->
 <div class="envelope">
     <div class="envelope-text" id="envelopeText">For my lovely Thant</div>
-    <button class="envelope-button" id="envelopeBtn">ကို့နှလုံးသားထဲ ကြည့်ဖို့နှိပ်ပါ</button>
+    <button class="envelope-button" id="envelopeBtn">
+        ကို့နှလုံးသားထဲ ကြည့်ဖို့နှိပ်ပါ
+    </button>
 </div>
 
-<!-- Name outside envelope -->
-<div class="name" id="kozin">
-    <span>K</span><span>o</span><span> </span><span>Z</span><span>i</span><span>n</span>
-</div>
+<div class="name" id="kozin">Ko Zin</div>
 
-<!-- Music -->
-<audio id="loveMusic" src="love.mp3"></audio> <!-- MP3 in same repo -->
+<!-- IMPORTANT: love.mp3 must be in same folder -->
+<audio id="loveMusic" src="love.mp3" preload="auto"></audio>
 
 <script>
-// Floating emojis
+
+/* Floating Emojis */
 const emojis = ['❤️','🍫','🌹','💋'];
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 80; i++) {
     const emoji = document.createElement('div');
     emoji.className = 'emoji';
     emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
     emoji.style.left = Math.random() * 100 + 'vw';
     emoji.style.top = Math.random() * 100 + 'vh';
-    emoji.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
     document.body.appendChild(emoji);
-
-    let x = parseFloat(emoji.style.left);
-    let y = parseFloat(emoji.style.top);
-    let dx = (Math.random() * 0.2 + 0.05) * (Math.random() < 0.5 ? -1 : 1);
-    let dy = (Math.random() * 0.2 + 0.05) * (Math.random() < 0.5 ? -1 : 1);
-
-    function animate() {
-        x += dx; y += dy;
-        if (x < 0 || x > 100) dx = -dx;
-        if (y < 0 || y > 100) dy = -dy;
-        emoji.style.left = x + 'vw';
-        emoji.style.top = y + 'vh';
-        requestAnimationFrame(animate);
-    }
-    animate();
 }
 
-// Align "Ko Zin" outside envelope
-const envelope = document.querySelector('.envelope');
-const name = document.getElementById('kozin');
-const envRect = envelope.getBoundingClientRect();
-name.style.left = (envRect.right - name.offsetWidth) + 'px';
-name.style.top = (envRect.bottom + 10) + 'px';
-
-// Animate letters inside envelope
-const envelopeText = document.getElementById('envelopeText');
-const text = envelopeText.innerText;
-envelopeText.innerHTML = '';
-for(let i=0; i<text.length; i++){
-    const span = document.createElement('span');
-    span.innerText = text[i];
-    span.style.animationDelay = (i*0.2)+'s';
-    envelopeText.appendChild(span);
-}
-
-// Show button after animation
-const totalDuration = text.length * 200;
+/* Show button after short delay */
 setTimeout(()=>{
     document.getElementById('envelopeBtn').style.display = 'block';
-}, totalDuration);
+}, 2000);
 
-// Button click: play music and keep soft pale yellow background
+/* FIXED MUSIC PLAY */
 document.getElementById('envelopeBtn').addEventListener('click', () => {
+
     const music = document.getElementById('loveMusic');
-    music.play();
-    document.body.innerHTML = ''; // clear everything
-    document.body.style.backgroundColor = '#FFF9C4'; // keep soft pale yellow
+
+    // Remove everything except audio
+    document.body.innerHTML = '';
+    document.body.style.backgroundColor = '#FFF9C4';
+
+    // Re-attach audio element
+    document.body.appendChild(music);
+
+    // Play music safely
+    music.play().catch(err => {
+        console.log("Playback blocked:", err);
+    });
 });
+
 </script>
 
 </body>
