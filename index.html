@@ -1,415 +1,404 @@
-<!DOCTYPE html>  
-<html>  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  
-<style>  
-body{  
-    margin:0;  
-    background:#FFF9C4;  
-    overflow:hidden;  
-    font-family:"Segoe UI Emoji","Noto Color Emoji",sans-serif;  
-}  
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-/* ===== Corner Emojis ===== */  
-.corner{  
-    position:fixed;  
-    font-size:clamp(70px,18vw,150px);  
-    animation:glow 2s infinite alternate;  
-    z-index:5;  
-}  
-.top-right{top:20px;right:20px;}  
-.bottom-left{bottom:20px;left:20px;}  
+<style>
+body{
+    margin:0;
+    background:#FFF9C4;
+    overflow:hidden;
+    font-family:"Segoe UI Emoji","Noto Color Emoji",sans-serif;
+}
 
-@keyframes glow{  
-    from{filter:drop-shadow(0 0 10px hotpink);}  
-    to{filter:drop-shadow(0 0 40px deeppink);}  
-}  
+/* ===== Corner Emojis ===== */
+.corner{
+    position:fixed;
+    font-size:clamp(70px,18vw,150px);
+    animation:glow 2s infinite alternate;
+    z-index:5;
+}
+.top-right{top:20px;right:20px;}
+.bottom-left{bottom:20px;left:20px;}
 
-/* ===== Falling Hearts ===== */  
-.heart{  
-    position:absolute;  
-    top:-10vh;  
-    animation:fall linear infinite;  
-}  
+@keyframes glow{
+    from{filter:drop-shadow(0 0 10px hotpink);}
+    to{filter:drop-shadow(0 0 40px deeppink);}
+}
 
-@keyframes fall{  
-    0%{transform:translateY(-10vh);opacity:0;}  
-    10%{opacity:1;}  
-    100%{transform:translateY(110vh);opacity:0;}  
-}  
+/* ===== Falling Hearts ===== */
+.heart{
+    position:absolute;
+    top:-10vh;
+    animation:fall linear infinite;
+}
 
-/* ===== Top Message ===== */  
-.top-message{  
-    position:fixed;  
-    top:22%;  
-    width:100%;  
-    text-align:center;  
-    font-size:clamp(20px,6vw,36px);  
-    color:#ff1a8c;  
-    font-weight:bold;  
-    opacity:0;  
-    transition:opacity 1s;  
-}  
+@keyframes fall{
+    0%{transform:translateY(-10vh);opacity:0;}
+    10%{opacity:1;}
+    100%{transform:translateY(110vh);opacity:0;}
+}
 
-/* ===== Envelope ===== */  
-.envelope-wrapper{  
-    position:fixed;  
-    top:58%;  
-    left:50%;  
-    transform:translate(-50%,-50%);  
-    width:88vw;  
-    max-width:600px;  
-    text-align:right;  
-    opacity:0;  
-    transition:opacity 1s;  
-    cursor:pointer;  
+/* ===== Top Message ===== */
+.top-message{
+    position:fixed;
+    top:22%;
+    width:100%;
+    text-align:center;
+    font-size:clamp(20px,6vw,36px);
+    color:#ff1a8c;
+    font-weight:bold;
+    opacity:0;
+    transition:opacity 1s;
+}
+
+/* ===== Envelope ===== */
+.envelope-wrapper{
+    position:fixed;
+    top:58%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:88vw;
+    max-width:600px;
+    text-align:right;
+    opacity:0;
+    transition:opacity 1s;
+    cursor:pointer;
     z-index:10;
-    pointer-events: auto;  /* Fix: enable pointer events */
-}  
+    pointer-events:auto;
+}
 
-.envelope{  
-    width:100%;  
-    aspect-ratio:4/3;  
-    background:white;  
-    border-radius:20px;  
-    position:relative;  
-    animation:envelopeGlow 2s infinite alternate;  
-    perspective:1000px;  
-    pointer-events: auto; /* Fix: make clickable */
-}  
+.envelope{
+    width:100%;
+    aspect-ratio:4/3;
+    background:white;
+    border-radius:20px;
+    position:relative;
+    animation:envelopeGlow 2s infinite alternate;
+    perspective:1000px;
+    pointer-events:auto;
+}
 
-@keyframes envelopeGlow{  
-    from{box-shadow:0 0 20px hotpink;}  
-    to{box-shadow:0 0 60px deeppink;}  
-}  
+@keyframes envelopeGlow{
+    from{box-shadow:0 0 20px hotpink;}
+    to{box-shadow:0 0 60px deeppink;}
+}
 
-.flap{  
-    position:absolute;  
-    width:100%;  
-    height:50%;  
-    background:#f8d7da;  
-    clip-path:polygon(0 0,100% 0,50% 100%);  
-    transform-origin:top;  
-    transition:transform 1s ease;  
-    backface-visibility:hidden;  
-    pointer-events:none;  
-}  
+.flap{
+    position:absolute;
+    width:100%;
+    height:50%;
+    background:#f8d7da;
+    clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top;
+    transition:transform 1s ease;
+    backface-visibility:hidden;
+    pointer-events:none;
+}
 
-.envelope.open .flap{  
-    transform:rotateX(180deg);  
-}  
+.envelope.open .flap{
+    transform:rotateX(180deg);
+}
 
-.ribbon-v{  
-    position:absolute;  
-    left:50%;  
-    width:8%;  
-    height:100%;  
-    background:#ff4da6;  
-    transform:translateX(-50%);  
-}  
+.ribbon-v{
+    position:absolute;
+    left:50%;
+    width:8%;
+    height:100%;
+    background:#ff4da6;
+    transform:translateX(-50%);
+}
 
-.ribbon-h{  
-    position:absolute;  
-    top:50%;  
-    width:100%;  
-    height:12%;  
-    background:#ff4da6;  
-    transform:translateY(-50%);  
-}  
+.ribbon-h{
+    position:absolute;
+    top:50%;
+    width:100%;
+    height:12%;
+    background:#ff4da6;
+    transform:translateY(-50%);
+}
 
-.bow{  
-    position:absolute;  
-    top:50%;  
-    left:50%;  
-    width:18%;  
-    aspect-ratio:1/1;  
-    background:#ff1a8c;  
-    border-radius:50%;  
-    transform:translate(-50%,-50%);  
-}  
+.bow{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:18%;
+    aspect-ratio:1/1;
+    background:#ff1a8c;
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+}
 
-/* ===== Name ===== */  
-.bottom-name{  
-    margin-top:10px;  
-    font-size:clamp(18px,5vw,28px);  
-    color:#ff0066;  
-    font-weight:bold;  
-}  
+/* ===== Name ===== */
+.bottom-name{
+    margin-top:10px;
+    font-size:clamp(18px,5vw,28px);
+    color:#ff0066;
+    font-weight:bold;
+}
 
-/* ===== Chocolate ===== */  
-.chocolate{  
-    position:fixed;  
-    top:50%;  
-    left:50%;  
-    transform:translate(-50%,-50%) scale(0);  
-    font-size:clamp(150px,32vw,280px);  
-    transition:opacity 1s ease;  
-}  
+/* ===== Chocolate ===== */
+.chocolate{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    font-size:clamp(150px,32vw,280px);
+    transition:opacity 1s ease;
+}
 
-.chocolate.show{  
-    animation:pop 1.2s forwards, glowChoco 1.5s infinite alternate;  
-}  
+.chocolate.show{
+    animation:pop 1.2s forwards, glowChoco 1.5s infinite alternate;
+}
 
-@keyframes pop{  
-    0%{transform:translate(-50%,-50%) scale(0);}  
-    60%{transform:translate(-50%,-170%) scale(1.9);}  
-    80%{transform:translate(-50%,-160%) scale(1.6);}  
-    100%{transform:translate(-50%,-170%) scale(1.7);}  
-}  
+@keyframes pop{
+    0%{transform:translate(-50%,-50%) scale(0);}
+    60%{transform:translate(-50%,-170%) scale(1.9);}
+    80%{transform:translate(-50%,-160%) scale(1.6);}
+    100%{transform:translate(-50%,-170%) scale(1.7);}
+}
 
-@keyframes glowChoco{  
-    from{filter:drop-shadow(0 0 10px hotpink);}  
-    to{filter:drop-shadow(0 0 40px deeppink);}  
-}  
+@keyframes glowChoco{
+    from{filter:drop-shadow(0 0 10px hotpink);}
+    to{filter:drop-shadow(0 0 40px deeppink);}
+}
 
-/* ===== Final Typing Message ===== */  
-.final-message{  
-    position:fixed;  
-    top:55%;  
-    left:50%;  
-    transform:translate(-50%,-50%);  
-    width:90%;  
-    max-width:600px;  
-    text-align:center;  
-    font-size:clamp(18px,5vw,26px);  
-    color:#ff0066;  
-    font-weight:bold;  
-    line-height:1.6;  
-    opacity:0;  
-    transition:opacity 1s ease;  
-}  
+/* ===== Final Typing Message ===== */
+.final-message{
+    position:fixed;
+    top:55%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:90%;
+    max-width:600px;
+    text-align:center;
+    font-size:clamp(18px,5vw,26px);
+    color:#ff0066;
+    font-weight:bold;
+    line-height:1.6;
+    opacity:0;
+    transition:opacity 1s ease;
+}
 
-.fade-letter{  
-    opacity:0;  
-    animation:fadeInLetter 0.6s forwards;  
-}  
+.fade-letter{
+    opacity:0;
+    animation:fadeInLetter 0.6s forwards;
+}
 
-@keyframes fadeInLetter{  
-    from{opacity:0; transform:translateY(5px);}  
-    to{opacity:1; transform:translateY(0);}  
-}  
+@keyframes fadeInLetter{
+    from{opacity:0; transform:translateY(5px);}
+    to{opacity:1; transform:translateY(0);}
+}
 
-.cursor{  
-    display:inline-block;  
-    width:2px;  
-    background:#ff0066;  
-    margin-left:4px;  
-    animation:blink 0.8s infinite;  
-}  
+.cursor{
+    display:inline-block;
+    width:2px;
+    background:#ff0066;
+    margin-left:4px;
+    animation:blink 0.8s infinite;
+}
 
-@keyframes blink{  
-    0%,50%,100%{opacity:1;}  
-    25%,75%{opacity:0;}  
-}  
+@keyframes blink{
+    0%,50%,100%{opacity:1;}
+    25%,75%{opacity:0;}
+}
 
-/* ===== Button ===== */  
-.surprise-btn{  
-    margin-top:25px;  
-    padding:10px 28px;  
-    font-size:18px;  
-    border:none;  
-    border-radius:30px;  
-    background:linear-gradient(45deg,#ff4da6,#ff1a8c);  
-    color:white;  
-    font-weight:bold;  
-    cursor:pointer;  
-    opacity:0;  
-    transform:translateY(10px);  
-    transition:all 0.6s ease;  
-}  
+/* ===== Button ===== */
+.surprise-btn{
+    margin-top:25px;
+    padding:10px 28px;
+    font-size:18px;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(45deg,#ff4da6,#ff1a8c);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    opacity:0;
+    transform:translateY(10px);
+    transition:all 0.6s ease;
+}
 
-.surprise-btn.show{  
-    opacity:1;  
-    transform:translateY(0);  
-}  
+.surprise-btn.show{
+    opacity:1;
+    transform:translateY(0);
+}
 
-.fade-out{  
-    opacity:0 !important;  
-}  
+.fade-out{
+    opacity:0 !important;
+}
 
-.poem{  
-    position:fixed;  
-    top:50%;  
-    left:50%;  
-    transform:translate(-50%,-50%);  
-    width:90%;  
-    max-width:650px;  
-    text-align:center;  
-    font-size:clamp(18px,5vw,28px);  
-    color:#ff0066;  
-    font-weight:bold;  
-    line-height:1.8;  
-    opacity:0;  
-    transition:opacity 1.5s ease;  
-}  
+.poem{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:90%;
+    max-width:650px;
+    text-align:center;
+    font-size:clamp(18px,5vw,28px);
+    color:#ff0066;
+    font-weight:bold;
+    line-height:1.8;
+    opacity:0;
+    transition:opacity 1.5s ease;
+}
 
-.poem.show{  
-    opacity:1;  
-}  
-</style>  
-</head>  
+.poem.show{
+    opacity:1;
+}
+</style>
+</head>
 
-<body>  
+<body>
 
 <!-- Background Music -->
 <audio id="bgMusic" src="love2.mp3" loop></audio>
 
-<div class="corner top-right">🌹</div>  
-<div class="corner bottom-left">💐</div>  
+<div class="corner top-right">🌹</div>
+<div class="corner bottom-left">💐</div>
 
-<div class="top-message" id="topText">  
-Happy Valentine's Day သဲတုံး 😘  
-</div>  
+<div class="top-message" id="topText">
+Happy Valentine's Day သဲတုံး 😘
+</div>
 
-<div class="envelope-wrapper" id="wrapper">  
-    <div class="envelope" id="envelope">  
-        <div class="flap"></div>  
-        <div class="ribbon-v"></div>  
-        <div class="ribbon-h"></div>  
-        <div class="bow"></div>  
-    </div>  
-    <div class="bottom-name" id="nameText">ဇင်မိုးထက်</div>  
-</div>  
+<div class="envelope-wrapper" id="wrapper">
+    <div class="envelope" id="envelope">
+        <div class="flap"></div>
+        <div class="ribbon-v"></div>
+        <div class="ribbon-h"></div>
+        <div class="bow"></div>
+    </div>
+    <div class="bottom-name" id="nameText">ဇင်မိုးထက်</div>
+</div>
 
-<div class="chocolate" id="choco">🍫</div>  
+<div class="chocolate" id="choco">🍫</div>
 
-<div class="final-message" id="finalMessage">  
-    <span id="typed"></span><span class="cursor"></span>  
-    <br>  
-    <button class="surprise-btn" id="surpriseBtn">💖 Click Here 💖</button>  
-</div>  
+<div class="final-message" id="finalMessage">
+    <span id="typed"></span><span class="cursor"></span>
+    <br>
+    <button class="surprise-btn" id="surpriseBtn">💖 Click Here 💖</button>
+</div>
 
-<div class="poem" id="poem">  
-သဲအနားမှာရှိနေရုံနဲ့ ကိုယ့်ဘ၀ ပြီးပြည့်စုံတယ်...  
-
-သဲမျက်နှာလေး မြင်နေရတာနဲ့ပျော်နေမိတယ်...  
-
-သဲ အပြုံးလေးက ကို့စိတ် အေးချမ်းစေတယ်...  
-
-စကားအများကြီး မလိုပါဘူး သဲနဲ့အတူရှိရုံနဲ့ လုံလောက်ပြီ...  
-
-ဒီနေ့လည်း ချစ်တယ်  
-နောက်နေ့လည်း ချစ်မယ်  
-အမြဲတမ်း အမြဲတမ်း ချစ်တယ်... 💞  
-</div>  
+<div class="poem" id="poem">
+သဲအနားမှာရှိနေရုံနဲ့ ကိုယ့်ဘ၀ ပြီးပြည့်စုံတယ်...
+<br>
+သဲမျက်နှာလေး မြင်နေရတာနဲ့ပျော်နေမိတယ်...
+<br>
+သဲ အပြုံးလေးက ကို့စိတ် အေးချမ်းစေတယ်...
+<br>
+စကားအများကြီး မလိုပါဘူး သဲနဲ့အတူရှိရုံနဲ့ လုံလောက်ပြီ...
+<br>
+ဒီနေ့လည်း ချစ်တယ်
+<br>
+နောက်နေ့လည်း ချစ်မယ်
+<br>
+အမြဲတမ်း အမြဲတမ်း ချစ်တယ်... 💞
+</div>
 
 <script>
-const music = document.getElementById("bgMusic");
+const hearts = ["🌺","💖","💕","💘","💗"];
+for(let i=0;i<40;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.textContent=hearts[Math.floor(Math.random()*hearts.length)];
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(14+Math.random()*16)+"px";
+    h.style.animationDuration=(5+Math.random()*5)+"s";
+    document.body.appendChild(h);
+}
 
-window.addEventListener("load", function() {
-    setTimeout(function() {
-        music.volume = 0.6;
-        music.play().catch(() => {});
-    }, 3000);
+setTimeout(()=>{
+    document.getElementById("topText").style.opacity="1";
+    setTimeout(()=>{
+        document.getElementById("wrapper").style.opacity="1";
+    },2000);
+},2000);
+
+const wrapper=document.getElementById("wrapper");
+const music=document.getElementById("bgMusic");
+let opened=false;
+
+wrapper.addEventListener("click",()=>{
+    if(opened) return;
+    opened=true;
+
+    // ✅ Play music on user click (required for GitHub Pages)
+    music.volume=0.6;
+    music.play().catch(()=>{});
+
+    document.getElementById("envelope").classList.add("open");
+    document.getElementById("topText").style.opacity="0";
+    document.getElementById("nameText").style.opacity="0";
+
+    const choco=document.getElementById("choco");
+    choco.classList.add("show");
+
+    setTimeout(()=>{
+        wrapper.style.opacity="0";
+        setTimeout(()=>{
+            wrapper.style.display="none";
+            startTyping();
+        },1000);
+    },1200);
 });
 
-const hearts = ["🌺", "💖", "💕", "💘", "💗"];  
-for (let i = 0; i < 40; i++) {  
-    const h = document.createElement("div");  
-    h.className = "heart";  
-    h.textContent = hearts[Math.floor(Math.random() * hearts.length)];  
-    h.style.left = Math.random() * 100 + "vw";  
-    h.style.fontSize = 14 + Math.random() * 16 + "px";  
-    h.style.animationDuration = 5 + Math.random() * 5 + "s";  
-    document.body.appendChild(h);  
-}  
+const text=`သဲ စားဖို့ချောကလက်လေး
+ကို ပို့လိုက်တယ်နော်..
+Digital ချောကလက်လေးပေါ့..☺️
+အာဘွားးးးး 😘😘😘
+အရမ်းးးး ချစ်တယ် ချီးထုပ်လေး💞
+ကို့ကို အများကြီး ပို ချစ်ပေးနော် 🌹`;
 
-setTimeout(() => {  
-    document.getElementById("topText").style.opacity = "1";  
-    setTimeout(() => {  
-        document.getElementById("wrapper").style.opacity = "1";  
-    }, 2000);  
-}, 2000);  
+function startTyping(){
+    const box=document.getElementById("finalMessage");
+    const typed=document.getElementById("typed");
+    const btn=document.getElementById("surpriseBtn");
+    const cursor=document.querySelector(".cursor");
 
-const wrapper = document.getElementById("wrapper");  
-let opened = false;  
+    box.style.opacity="1";
+    let i=0;
 
-wrapper.addEventListener("click", function() {  
-    console.log("Envelope clicked");  // Debug click  
+    function type(){
+        if(i<text.length){
+            if(text[i]==="\n"){typed.innerHTML+="<br>";}
+            else{
+                const span=document.createElement("span");
+                span.className="fade-letter";
+                span.textContent=text[i];
+                typed.appendChild(span);
+            }
 
-    if (opened) return;  
-    opened = true;  
+            let delay=90;
+            if(text[i]==="." || text[i]==="…") delay=400;
+            if(text[i]==="😘" || text[i]==="💞" || text[i]==="🌹") delay=500;
 
-    music.volume = 0.6;  
-    music.play().catch(() => {});  
+            i++;
+            setTimeout(type,delay);
+        } else {
+            cursor.style.display="none";
+            btn.classList.add("show");
+        }
+    }
+    type();
+}
 
-    document.getElementById("envelope").classList.add("open");  
-    document.getElementById("topText").style.opacity = "0";  
-    document.getElementById("nameText").style.opacity = "0";  
+document.getElementById("surpriseBtn").addEventListener("click",()=>{
+    const choco=document.getElementById("choco");
+    const finalMessage=document.getElementById("finalMessage");
+    const poem=document.getElementById("poem");
 
-    const choco = document.getElementById("choco");  
-    choco.classList.add("show");  
+    choco.classList.add("fade-out");
+    finalMessage.classList.add("fade-out");
 
-    setTimeout(() => {  
-        wrapper.style.opacity = "0";  
-        setTimeout(() => {  
-            wrapper.style.display = "none";  
-            startTyping();  
-        }, 1000);  
-    }, 1200);  
-});  
+    setTimeout(()=>{
+        choco.style.display="none";
+        finalMessage.style.display="none";
+        poem.classList.add("show");
+    },1000);
+});
+</script>
 
-const text = `သဲ စားဖို့ချောကလက်လေး  
-ကို ပို့လိုက်တယ်နော်..  
-Digital ချောကလက်လေးပေါ့..☺️  
-အာဘွားးးးး 😘😘😘  
-အရမ်းးးး ချစ်တယ် ချီးထုပ်လေး💞  
-ကို့ကို အများကြီး ပို ချစ်ပေးနော် 🌹`;  
-
-function startTyping() {  
-    const box = document.getElementById("finalMessage");  
-    const typed = document.getElementById("typed");  
-    const btn = document.getElementById("surpriseBtn");  
-    const cursor = document.querySelector(".cursor");  
-
-    box.style.opacity = "1";  
-    let i = 0;  
-
-    function type() {  
-        if (i < text.length) {  
-
-            if (text[i] === "\n") {  
-                typed.innerHTML += "<br>";  
-            } else {  
-                const span = document.createElement("span");  
-                span.className = "fade-letter";  
-                span.textContent = text[i];  
-                typed.appendChild(span);  
-            }  
-
-            let delay = 90;  
-            if (text[i] === "." || text[i] === "…") delay = 400;  
-            if (text[i] === "😘" || text[i] === "💞" || text[i] === "🌹") delay = 500;  
-
-            i++;  
-            setTimeout(type, delay);  
-
-        } else {  
-            cursor.style.display = "none";  
-            btn.classList.add("show");  
-        }  
-    }  
-
-    type();  
-}  
-
-document.getElementById("surpriseBtn").addEventListener("click", function() {  
-    const choco = document.getElementById("choco");  
-    const finalMessage = document.getElementById("finalMessage");  
-    const poem = document.getElementById("poem");  
-
-    choco.classList.add("fade-out");  
-    finalMessage.classList.add("fade-out");  
-
-    setTimeout(() => {  
-        choco.style.display = "none";  
-        finalMessage.style.display = "none";  
-        poem.classList.add("show");  
-    }, 1000);  
-});  
-</script>  
-
-</body>  
+</body>
 </html>
