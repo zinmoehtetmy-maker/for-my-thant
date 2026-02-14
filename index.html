@@ -2,9 +2,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
 body{
     margin:0;
     background:#FFF9C4;
@@ -12,12 +17,13 @@ body{
     font-family:"Segoe UI Emoji","Noto Color Emoji",sans-serif;
 }
 
-/* Corner Emojis */
+/* ===== Corner Emojis ===== */
 .corner{
     position:fixed;
     font-size:clamp(70px,18vw,150px);
     animation:glow 2s infinite alternate;
     z-index:5;
+    pointer-events:none;
 }
 .top-right{top:20px;right:20px;}
 .bottom-left{bottom:20px;left:20px;}
@@ -27,11 +33,12 @@ body{
     to{filter:drop-shadow(0 0 40px deeppink);}
 }
 
-/* Hearts */
+/* ===== Falling Hearts ===== */
 .heart{
-    position:absolute;
+    position:fixed;
     top:-10vh;
     animation:fall linear infinite;
+    pointer-events:none;
 }
 
 @keyframes fall{
@@ -40,7 +47,7 @@ body{
     100%{transform:translateY(110vh);opacity:0;}
 }
 
-/* Top Message */
+/* ===== Top Message ===== */
 .top-message{
     position:fixed;
     top:22%;
@@ -51,9 +58,10 @@ body{
     font-weight:bold;
     opacity:0;
     transition:opacity 1s;
+    padding:0 10px;
 }
 
-/* Envelope */
+/* ===== Envelope ===== */
 .envelope-wrapper{
     position:fixed;
     top:58%;
@@ -128,6 +136,7 @@ body{
     transform:translate(-50%,-50%);
 }
 
+/* ===== Name ===== */
 .bottom-name{
     margin-top:10px;
     font-size:clamp(18px,5vw,28px);
@@ -135,7 +144,7 @@ body{
     font-weight:bold;
 }
 
-/* Chocolate */
+/* ===== Chocolate ===== */
 .chocolate{
     position:fixed;
     top:50%;
@@ -162,7 +171,7 @@ body{
     to{filter:drop-shadow(0 0 40px deeppink);}
 }
 
-/* Final Message */
+/* ===== Final Typing Message ===== */
 .final-message{
     position:fixed;
     top:55%;
@@ -178,6 +187,7 @@ body{
     opacity:0;
     transition:opacity 1s ease;
     z-index:20;
+    padding:0 10px;
 }
 
 .fade-letter{
@@ -203,12 +213,12 @@ body{
     25%,75%{opacity:0;}
 }
 
-/* Button */
+/* ===== Button ===== */
 .surprise-btn{
     position:relative;
     z-index:25;
     margin-top:25px;
-    padding:10px 28px;
+    padding:12px 28px;
     font-size:18px;
     border:none;
     border-radius:30px;
@@ -245,17 +255,16 @@ body{
     opacity:0;
     transition:opacity 1.5s ease;
     z-index:30;
+    padding:0 10px;
 }
 
-.poem.show{
-    opacity:1;
-}
+.poem.show{opacity:1;}
 </style>
 </head>
 
 <body>
 
-<audio id="bgMusic" src="love.mp3" loop></audio>
+<audio id="bgMusic" src="love.mp3" loop preload="auto"></audio>
 
 <div class="corner top-right">🌹</div>
 <div class="corner bottom-left">💐</div>
@@ -283,7 +292,13 @@ Happy Valentine's Day သဲတုံး 😘
 </div>
 
 <div class="poem" id="poem">
-Your love completes my world... 💞
+သဲအနားမှာရှိနေရုံနဲ့ ကိုယ့်ဘ၀ ပြီးပြည့်စုံတယ်...<br><br>
+သဲမျက်နှာလေး မြင်နေရတာနဲ့ပျော်နေမိတယ်...<br><br>
+သဲ အပြုံးလေးက ကို့စိတ် အေးချမ်းစေတယ်...<br><br>
+စကားအများကြီး မလိုပါဘူး သဲနဲ့အတူရှိရုံနဲ့ လုံလောက်ပြီ...<br><br>
+ဒီနေ့လည်း ချစ်တယ်<br>
+နောက်နေ့လည်း ချစ်မယ်<br>
+အမြဲတမ်း အမြဲတမ်း ချစ်တယ်... 💞
 </div>
 
 <script>
@@ -302,15 +317,13 @@ for(let i=0;i<40;i++){
     document.body.appendChild(h);
 }
 
-/* Show envelope + start music muted */
+/* Show envelope + start muted autoplay */
 setTimeout(()=>{
     document.getElementById("topText").style.opacity="1";
     setTimeout(()=>{
         document.getElementById("wrapper").style.opacity="1";
-
-        music.volume=0;
+        music.muted=true;
         music.play().catch(()=>{});
-
     },2000);
 },2000);
 
@@ -321,16 +334,8 @@ wrapper.addEventListener("click",function(){
     if(opened) return;
     opened=true;
 
-    /* Unmute smoothly */
-    let vol=0;
-    const fade=setInterval(()=>{
-        if(vol<0.6){
-            vol+=0.05;
-            music.volume=vol;
-        } else {
-            clearInterval(fade);
-        }
-    },200);
+    music.muted=false;
+    music.volume=0.6;
 
     document.getElementById("envelope").classList.add("open");
     document.getElementById("topText").style.opacity="0";
@@ -340,15 +345,17 @@ wrapper.addEventListener("click",function(){
     choco.classList.add("show");
 
     setTimeout(()=>{
-        wrapper.style.opacity="0";
-        setTimeout(()=>{
-            wrapper.style.display="none";
-            startTyping();
-        },1000);
+        wrapper.style.display="none";
+        startTyping();
     },1200);
 });
 
-const text=`You are my sweetest chocolate... 💖`;
+const text=`သဲ စားဖို့ချောကလက်လေး  
+ကို ပို့လိုက်တယ်နော်..  
+Digital ချောကလက်လေးပေါ့..☺️  
+အာဘွားးးးး 😘😘😘  
+အရမ်းးးး ချစ်တယ် ချီးထုပ်လေး💞  
+ကို့ကို အများကြီး ပို ချစ်ပေးနော် 🌹`;
 
 function startTyping(){
     const box=document.getElementById("finalMessage");
@@ -362,24 +369,26 @@ function startTyping(){
 
     function type(){
         if(i<text.length){
-            typed.innerHTML+=text[i];
+            if(text[i]==="\n"){
+                typed.innerHTML+="<br>";
+            }else{
+                typed.innerHTML+=text[i];
+            }
             i++;
             setTimeout(type,80);
         } else {
             cursor.style.display="none";
             btn.classList.add("show");
-            btn.disabled=false;
         }
     }
     type();
 }
 
-/* BUTTON FIX */
-document.getElementById("surpriseBtn").onclick=function(){
+document.getElementById("surpriseBtn").addEventListener("click",function(){
     document.getElementById("choco").style.display="none";
     document.getElementById("finalMessage").style.display="none";
     document.getElementById("poem").classList.add("show");
-};
+});
 
 </script>
 
