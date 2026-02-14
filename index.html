@@ -190,16 +190,6 @@ body{
     padding:0 10px;
 }
 
-.fade-letter{
-    opacity:0;
-    animation:fadeInLetter 0.6s forwards;
-}
-
-@keyframes fadeInLetter{
-    from{opacity:0; transform:translateY(5px);}
-    to{opacity:1; transform:translateY(0);}
-}
-
 .cursor{
     display:inline-block;
     width:2px;
@@ -215,8 +205,6 @@ body{
 
 /* ===== Button ===== */
 .surprise-btn{
-    position:relative;
-    z-index:25;
     margin-top:25px;
     padding:12px 28px;
     font-size:18px;
@@ -236,10 +224,6 @@ body{
     transform:translateY(0);
 }
 
-.fade-out{
-    opacity:0 !important;
-}
-
 .poem{
     position:fixed;
     top:50%;
@@ -255,7 +239,6 @@ body{
     opacity:0;
     transition:opacity 1.5s ease;
     z-index:30;
-    padding:0 10px;
 }
 
 .poem.show{opacity:1;}
@@ -302,8 +285,7 @@ Happy Valentine's Day သဲတုံး 😘
 </div>
 
 <script>
-
-const music=document.getElementById("bgMusic");
+const music = document.getElementById("bgMusic");
 
 /* Hearts */
 const hearts=["🌺","💖","💕","💘","💗"];
@@ -317,31 +299,30 @@ for(let i=0;i<40;i++){
     document.body.appendChild(h);
 }
 
-/* Show envelope + start muted autoplay */
+/* Show envelope after 2s */
 setTimeout(()=>{
     document.getElementById("topText").style.opacity="1";
     setTimeout(()=>{
         document.getElementById("wrapper").style.opacity="1";
-        music.muted=true;
-        music.play().catch(()=>{});
     },2000);
 },2000);
 
-const wrapper=document.getElementById("wrapper");
-let opened=false;
+const wrapper = document.getElementById("wrapper");
+let opened = false;
 
-wrapper.addEventListener("click",function(){
+wrapper.addEventListener("click", ()=>{
     if(opened) return;
-    opened=true;
+    opened = true;
 
-    music.muted=false;
-    music.volume=0.6;
+    // Play music on user interaction
+    music.volume = 0.6;
+    music.play().catch(()=>{});
 
     document.getElementById("envelope").classList.add("open");
     document.getElementById("topText").style.opacity="0";
     document.getElementById("nameText").style.opacity="0";
 
-    const choco=document.getElementById("choco");
+    const choco = document.getElementById("choco");
     choco.classList.add("show");
 
     setTimeout(()=>{
@@ -358,24 +339,26 @@ Digital ချောကလက်လေးပေါ့..☺️
 ကို့ကို အများကြီး ပို ချစ်ပေးနော် 🌹`;
 
 function startTyping(){
-    const box=document.getElementById("finalMessage");
-    const typed=document.getElementById("typed");
-    const btn=document.getElementById("surpriseBtn");
-    const cursor=document.querySelector(".cursor");
+    const box = document.getElementById("finalMessage");
+    const typed = document.getElementById("typed");
+    const btn = document.getElementById("surpriseBtn");
+    const cursor = document.querySelector(".cursor");
 
-    box.style.opacity="1";
-    typed.innerHTML="";
-    let i=0;
+    box.style.opacity = "1";
+    typed.innerHTML = "";
+    let i = 0;
 
     function type(){
         if(i<text.length){
             if(text[i]==="\n"){
                 typed.innerHTML+="<br>";
-            }else{
+            } else {
                 typed.innerHTML+=text[i];
             }
             i++;
-            setTimeout(type,80);
+            let delay = 80;
+            if(text[i]==="😘" || text[i]==="💞" || text[i]==="🌹") delay = 400;
+            setTimeout(type, delay);
         } else {
             cursor.style.display="none";
             btn.classList.add("show");
@@ -384,12 +367,11 @@ function startTyping(){
     type();
 }
 
-document.getElementById("surpriseBtn").addEventListener("click",function(){
+document.getElementById("surpriseBtn").addEventListener("click",()=>{
     document.getElementById("choco").style.display="none";
     document.getElementById("finalMessage").style.display="none";
     document.getElementById("poem").classList.add("show");
 });
-
 </script>
 
 </body>
